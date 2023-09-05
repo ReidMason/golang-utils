@@ -161,21 +161,31 @@ func TestMapStringToString(t *testing.T) {
 
 func TestFirstOrDefault(t *testing.T) {
 	tests := []struct {
+		comparator   func(x int32) bool
 		inputArr     []int32
 		defaultValue int32
 		expected     int32
 	}{
 		{
+			func(x int32) bool { return x == 12345 },
 			[]int32{12345, 123, 125},
 			0,
 			12345,
 		},
 		{
+			func(x int32) bool { return x == 0 },
+			[]int32{12345, 123, 125},
+			0,
+			0,
+		},
+		{
+			func(x int32) bool { return x == 12345 },
 			[]int32{},
 			0,
 			0,
 		},
 		{
+			func(x int32) bool { return x == 12345 },
 			[]int32{},
 			5,
 			5,
@@ -184,7 +194,7 @@ func TestFirstOrDefault(t *testing.T) {
 
 	for _, test := range tests {
 		test := test
-		res := FirstOrDefault(test.inputArr, test.defaultValue)
+		res := FirstOrDefault(test.inputArr, test.comparator, test.defaultValue)
 
 		if res != test.expected {
 			t.Errorf("Wrong value returned. Expected: %d found: %d", test.expected, res)

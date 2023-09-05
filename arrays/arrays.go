@@ -32,9 +32,11 @@ func Map[T, Y any](arr []T, fn func(x T) Y) []Y {
 // The FirstOrDefault function returns the first element or the provided default value
 //
 //	first := FirstOrDefault(slice, 0)
-func FirstOrDefault[T any](arr []T, defaultValue T) T {
-	if len(arr) > 0 {
-		return arr[0]
+func FirstOrDefault[T any](arr []T, fn func(x T) bool, defaultValue T) T {
+	for _, x := range arr {
+		if fn(x) {
+			return x
+		}
 	}
 
 	return defaultValue
