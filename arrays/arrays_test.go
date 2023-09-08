@@ -350,6 +350,11 @@ func TestSort(t *testing.T) {
 			[]int32{123, 125, 12345},
 			[]int32{12345, 125, 123},
 		},
+		{
+			func(a, b int32) bool { return a <= b },
+			[]int32{7, 9, 5, 10, 3, 6, 1, 8, 2, 4},
+			[]int32{1, 2, 3, 4, 5, 6, 7, 8, 9, 10},
+		},
 	}
 
 	for i, test := range tests {
