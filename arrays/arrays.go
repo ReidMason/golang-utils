@@ -74,3 +74,40 @@ func Find[T any](arr []T, fn func(x T) bool) (T, int, error) {
 }
 
 // Sort - Sort the array maybe using a lambda?
+
+func qs[T any](arr []T, lo int, hi int, fn func(a, b T) bool) []T {
+	if lo >= hi {
+		return arr
+	}
+
+	pivotIndex, arr := partition(arr, lo, hi, fn)
+	arr = qs(arr, lo, pivotIndex-1, fn)
+	return qs(arr, pivotIndex+1, hi, fn)
+}
+
+func partition[T any](arr []T, lo int, hi int, fn func(a, b T) bool) (int, []T) {
+	pivot := arr[hi]
+
+	index := lo - 1
+	for i := lo; i < hi; i++ {
+		if fn(arr[i], pivot) {
+			index++
+
+			// Swap elements
+			temp := arr[i]
+			arr[i] = arr[index]
+			arr[index] = temp
+		}
+	}
+
+	index++
+	// Swap the pivot to the last moved value location
+	arr[hi] = arr[index]
+	arr[index] = pivot
+
+	return index, arr
+}
+
+func QuickSort[T any](arr []T, fn func(a, b T) bool) []T {
+	return qs(arr, 0, len(arr)-1, fn)
+}
