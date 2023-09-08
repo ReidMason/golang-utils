@@ -348,7 +348,7 @@ func TestSort(t *testing.T) {
 		{
 			func(a, b int32) bool { return a >= b },
 			[]int32{123, 125, 12345},
-			[]int32{12345, 123, 125},
+			[]int32{12345, 125, 123},
 		},
 	}
 
