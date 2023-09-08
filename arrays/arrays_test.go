@@ -338,3 +338,33 @@ func TestFind(t *testing.T) {
 		}
 	}
 }
+
+func TestSort(t *testing.T) {
+	tests := []struct {
+		comparator func(a, b int32) bool
+		inputArr   []int32
+		expected   []int32
+	}{
+		{
+			func(a, b int32) bool { return a >= b },
+			[]int32{123, 125, 12345},
+			[]int32{12345, 123, 125},
+		},
+	}
+
+	for i, test := range tests {
+		test := test
+		res := QuickSort(test.inputArr, test.comparator)
+
+		if len(res) != len(test.expected) {
+			t.Fatalf("Wrong value returned for test %d. Expected: %d found: %d", i+1, test.expected, res)
+		}
+
+		for i, exp := range test.expected {
+			r := res[i]
+			if r != exp {
+				t.Fatalf("Wrong value in array inex %d. Expected: %d found: %d", i+1, test.expected, res)
+			}
+		}
+	}
+}
