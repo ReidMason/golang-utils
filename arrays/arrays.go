@@ -108,6 +108,9 @@ func partition[T any](arr []T, lo int, hi int, fn func(a, b T) bool) (int, []T) 
 	return index, arr
 }
 
+// Sort a slice using the quicksort sorting method
+//
+//	QuickSort(slice, fn func(a, b int) bool { return a >= b})
 func QuickSort[T any](arr []T, fn func(a, b T) bool) []T {
 	return qs(arr, 0, len(arr)-1, fn)
 }
