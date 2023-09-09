@@ -2,6 +2,7 @@ package arrays
 
 import (
 	"fmt"
+	"math/rand"
 	"testing"
 )
 
@@ -371,5 +372,22 @@ func TestSort(t *testing.T) {
 				t.Fatalf("Wrong value in array inex %d. Expected: %d found: %d", i+1, test.expected, res)
 			}
 		}
+	}
+}
+
+func BenchmarkSort(b *testing.B) {
+	sliceSize := 1000
+	iterations := 1000
+
+	source := rand.NewSource(1)
+	random := rand.New(source)
+	myArr := make([]int, 0, sliceSize)
+	for i := 0; i < sliceSize; i++ {
+		myArr = append(myArr, random.Int())
+	}
+	b.ResetTimer()
+
+	for i := 0; i < iterations; i++ {
+		QuickSort(myArr, func(a, b int) bool { return a >= b })
 	}
 }
