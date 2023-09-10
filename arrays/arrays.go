@@ -84,6 +84,8 @@ func Find[T any](arr []T, fn func(x T) bool) (T, int, error) {
 
 // Sort - Sort the array maybe using a lambda?
 
+// The qs function contains the actual logic for the quicksort algorithm
+// If you want to sort use the QuickSort function instead of this one
 func qs[T any](arr []T, lo int, hi int, fn func(a, b T) bool) []T {
 	if lo >= hi {
 		return arr
@@ -94,6 +96,7 @@ func qs[T any](arr []T, lo int, hi int, fn func(a, b T) bool) []T {
 	return qs(arr, pivotIndex+1, hi, fn)
 }
 
+// The partition function does the sorting of the partitions for the quicksort algorithm
 func partition[T any](arr []T, lo int, hi int, fn func(a, b T) bool) (int, []T) {
 	pivot := arr[hi]
 
