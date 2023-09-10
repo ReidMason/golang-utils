@@ -42,6 +42,9 @@ func FirstOrDefault[T any](arr []T, fn func(x T) bool, defaultValue T) T {
 	return defaultValue
 }
 
+// The Some function checks whether any elements in an array satisfy a provided predicate
+//
+//	result := Some(slice, func(x int32) bool { return x == 5 })
 func Some[T any](arr []T, fn func(x T) bool) bool {
 	for _, x := range arr {
 		if fn(x) {
@@ -52,6 +55,9 @@ func Some[T any](arr []T, fn func(x T) bool) bool {
 	return false
 }
 
+// The Every function checks whether all elements in an array satisfy a provided predicate
+//
+//	result := Every(slice, func(x int32) bool { return x == 5 })
 func Every[T any](arr []T, fn func(x T) bool) bool {
 	for _, x := range arr {
 		if !fn(x) {
@@ -62,6 +68,9 @@ func Every[T any](arr []T, fn func(x T) bool) bool {
 	return true
 }
 
+// The Find function returns the first element that satisfies the provided predicate
+//
+//	result := Find(slice, func(x int32) bool { return x == 5 })
 func Find[T any](arr []T, fn func(x T) bool) (T, int, error) {
 	for i, x := range arr {
 		if fn(x) {
