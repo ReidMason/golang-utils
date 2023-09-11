@@ -1,6 +1,9 @@
 package arrays
 
-import "errors"
+import (
+	"errors"
+	"sort"
+)
 
 // The Filter function returns a filtered copy of the provided slice.
 // Only elements that return true under the provided predicate will be contained in the returned slice
@@ -123,6 +126,8 @@ func partition[T any](arr []T, lo int, hi int, fn func(a, b T) bool) (int, []T) 
 // Sort a slice using the quicksort sorting method
 //
 //	QuickSort(slice, fn func(a, b int) bool { return a >= b})
-func QuickSort[T any](arr []T, fn func(a, b T) bool) []T {
-	return qs(arr, 0, len(arr)-1, fn)
+func Sort[T any](arr []T, fn func(a, b T) bool) {
+	sort.Slice(arr, func(i, j int) bool {
+		return fn(arr[i], arr[j])
+	})
 }
