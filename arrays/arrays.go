@@ -85,47 +85,9 @@ func Find[T any](arr []T, fn func(x T) bool) (T, int, error) {
 	return val, -1, errors.New("Element not found")
 }
 
-// Sort - Sort the array maybe using a lambda?
-
-// The qs function contains the actual logic for the quicksort algorithm
-// If you want to sort use the QuickSort function instead of this one
-func qs[T any](arr []T, lo int, hi int, fn func(a, b T) bool) []T {
-	if lo >= hi {
-		return arr
-	}
-
-	pivotIndex, arr := partition(arr, lo, hi, fn)
-	arr = qs(arr, lo, pivotIndex-1, fn)
-	return qs(arr, pivotIndex+1, hi, fn)
-}
-
-// The partition function does the sorting of the partitions for the quicksort algorithm
-func partition[T any](arr []T, lo int, hi int, fn func(a, b T) bool) (int, []T) {
-	pivot := arr[hi]
-
-	index := lo - 1
-	for i := lo; i < hi; i++ {
-		if fn(arr[i], pivot) {
-			index++
-
-			// Swap elements
-			temp := arr[i]
-			arr[i] = arr[index]
-			arr[index] = temp
-		}
-	}
-
-	index++
-	// Swap the pivot to the last moved value location
-	arr[hi] = arr[index]
-	arr[index] = pivot
-
-	return index, arr
-}
-
-// Sort a slice using the quicksort sorting method
+// The sort function sorts a slice using the provided sort function
 //
-//	QuickSort(slice, fn func(a, b int) bool { return a >= b})
+//	Sort(slice, fn func(a, b int) bool { return a >= b})
 func Sort[T any](arr []T, fn func(a, b T) bool) {
 	sort.Slice(arr, func(i, j int) bool {
 		return fn(arr[i], arr[j])
