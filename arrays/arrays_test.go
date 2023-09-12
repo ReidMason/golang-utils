@@ -6,6 +6,7 @@ import (
 )
 
 func TestFilterInts(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		filter   func(x int32) bool
 		input    []int32
@@ -51,6 +52,7 @@ func TestFilterInts(t *testing.T) {
 }
 
 func TestFilterObjects(t *testing.T) {
+	t.Parallel()
 	type Book struct {
 		title string
 	}
@@ -100,6 +102,7 @@ func TestFilterObjects(t *testing.T) {
 }
 
 func TestMap(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		mutation func(x int32) string
 		input    []int32
@@ -130,6 +133,7 @@ func TestMap(t *testing.T) {
 }
 
 func TestMapStringToString(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		mutation func(x string) string
 		input    []string
@@ -160,6 +164,7 @@ func TestMapStringToString(t *testing.T) {
 }
 
 func TestFirstOrDefault(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		comparator   func(x int32) bool
 		inputArr     []int32
@@ -203,6 +208,7 @@ func TestFirstOrDefault(t *testing.T) {
 }
 
 func TestSome(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		comparator func(x int32) bool
 		inputArr   []int32
@@ -246,6 +252,7 @@ func TestSome(t *testing.T) {
 }
 
 func TestEvery(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		comparator func(x int32) bool
 		inputArr   []int32
@@ -284,6 +291,7 @@ func TestEvery(t *testing.T) {
 }
 
 func TestFind(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		comparator    func(x int32) bool
 		inputArr      []int32
@@ -340,6 +348,7 @@ func TestFind(t *testing.T) {
 }
 
 func TestSort(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		comparator func(a, b int32) bool
 		inputArr   []int32
