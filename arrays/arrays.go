@@ -1,7 +1,6 @@
 package arrays
 
 import (
-	"errors"
 	"sort"
 )
 
@@ -74,15 +73,15 @@ func Every[T any](arr []T, fn func(x T) bool) bool {
 // The Find function returns the first element that satisfies the provided predicate
 //
 //	result := Find(slice, func(x int32) bool { return x == 5 })
-func Find[T any](arr []T, fn func(x T) bool) (T, int, error) {
+func Find[T any](arr []T, fn func(x T) bool) (T, int) {
 	for i, x := range arr {
 		if fn(x) {
-			return x, i, nil
+			return x, i
 		}
 	}
 
 	var val T
-	return val, -1, errors.New("Element not found")
+	return val, -1
 }
 
 // The sort function sorts a slice using the provided sort function

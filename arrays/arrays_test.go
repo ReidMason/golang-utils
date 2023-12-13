@@ -331,11 +331,7 @@ func TestFind(t *testing.T) {
 
 	for i, test := range tests {
 		test := test
-		res, index, err := Find(test.inputArr, test.comparator)
-
-		if (err != nil) != test.errors {
-			t.Fatalf("Result errored when not expected %d. Expected: %d found: %d", i+1, test.expected, res)
-		}
+		res, index := Find(test.inputArr, test.comparator)
 
 		if res != test.expected {
 			t.Fatalf("Wrong value returned for test %d. Expected: %d found: %d", i+1, test.expected, res)
