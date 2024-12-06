@@ -1,4 +1,4 @@
-package arrays
+package enumerable
 
 import (
 	"fmt"
@@ -36,7 +36,7 @@ func TestFilterInts(t *testing.T) {
 
 	for _, test := range tests {
 		test := test
-		res := Filter(test.input, test.filter)
+		res := New(test.input).Filter(test.filter).Value()
 
 		if len(res) != len(test.expected) {
 			t.Errorf("Wrong number of elements in array. Expected: %d found: %d", len(test.expected), len(res))
@@ -86,7 +86,7 @@ func TestFilterObjects(t *testing.T) {
 
 	for _, test := range tests {
 		test := test
-		res := Filter(test.input, test.filter)
+		res := New(test.input).Filter(test.filter).Value()
 
 		if len(res) != len(test.expected) {
 			t.Errorf("Wrong number of elements in array. Expected: %d found: %d", len(test.expected), len(res))
@@ -199,7 +199,7 @@ func TestFirstOrDefault(t *testing.T) {
 
 	for _, test := range tests {
 		test := test
-		res := FirstOrDefault(test.inputArr, test.comparator, test.defaultValue)
+		res := New(test.inputArr).FirstOrDefault(test.comparator, test.defaultValue)
 
 		if res != test.expected {
 			t.Errorf("Wrong value returned. Expected: %d found: %d", test.expected, res)
@@ -282,7 +282,7 @@ func TestEvery(t *testing.T) {
 
 	for i, test := range tests {
 		test := test
-		res := Every(test.inputArr, test.comparator)
+		res := New(test.inputArr).Every(test.comparator)
 
 		if res != test.expected {
 			t.Errorf("Wrong value returned for test %d. Expected: %t found: %t", i+1, test.expected, res)
@@ -331,7 +331,7 @@ func TestFind(t *testing.T) {
 
 	for i, test := range tests {
 		test := test
-		res, index := Find(test.inputArr, test.comparator)
+		res, index := New(test.inputArr).Find(test.comparator)
 
 		if res != test.expected {
 			t.Fatalf("Wrong value returned for test %d. Expected: %d found: %d", i+1, test.expected, res)
@@ -364,8 +364,7 @@ func TestSort(t *testing.T) {
 
 	for i, test := range tests {
 		test := test
-		Sort(test.inputArr, test.comparator)
-		res := test.inputArr
+		res := New(test.inputArr).Sort(test.comparator).Value()
 
 		if len(res) != len(test.expected) {
 			t.Fatalf("Wrong value returned for test %d. Expected: %d found: %d", i+1, test.expected, res)

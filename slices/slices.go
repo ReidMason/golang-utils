@@ -1,22 +1,34 @@
-package arrays
+package enumerable
 
 import (
 	"sort"
 )
 
+type Enumerable[T any] struct {
+	data []T
+}
+
+func New[T any](arr []T) Enumerable[T] {
+	return Enumerable[T]{arr}
+}
+
+func (e Enumerable[T]) Value() []T {
+	return e.data
+}
+
 // The Filter function returns a filtered copy of the provided slice.
 // Only elements that return true under the provided predicate will be contained in the returned slice
 //
 //	filtered = array.Filter(slice, fn func(x int32) bool { return x == 123 })
-func Filter[T any](arr []T, fn func(x T) bool) []T {
+func (e Enumerable[T]) Filter(fn func(x T) bool) Enumerable[T] {
 	res := make([]T, 0)
-	for _, x := range arr {
+	for _, x := range e.data {
 		if fn(x) {
 			res = append(res, x)
 		}
 	}
 
-	return res
+	return New(res)
 }
 
 // The Map function returns a copy of the provided slice with the supplied function run against all elements.
@@ -34,8 +46,8 @@ func Map[T, Y any](arr []T, fn func(x T) Y) []Y {
 // The FirstOrDefault function returns the first element or the provided default value
 //
 //	first := FirstOrDefault(slice, 0)
-func FirstOrDefault[T any](arr []T, fn func(x T) bool, defaultValue T) T {
-	for _, x := range arr {
+func (e Enumerable[T]) FirstOrDefault(fn func(x T) bool, defaultValue T) T {
+	for _, x := range e.data {
 		if fn(x) {
 			return x
 		}
@@ -60,8 +72,8 @@ func Some[T any](arr []T, fn func(x T) bool) bool {
 // The Every function checks whether all elements in an array satisfy a provided predicate
 //
 //	result := Every(slice, func(x int32) bool { return x == 5 })
-func Every[T any](arr []T, fn func(x T) bool) bool {
-	for _, x := range arr {
+func (e Enumerable[T]) Every(fn func(x T) bool) bool {
+	for _, x := range e.data {
 		if !fn(x) {
 			return false
 		}
@@ -73,8 +85,8 @@ func Every[T any](arr []T, fn func(x T) bool) bool {
 // The Find function returns the first element that satisfies the provided predicate
 //
 //	result := Find(slice, func(x int32) bool { return x == 5 })
-func Find[T any](arr []T, fn func(x T) bool) (T, int) {
-	for i, x := range arr {
+func (e Enumerable[T]) Find(fn func(x T) bool) (T, int) {
+	for i, x := range e.data {
 		if fn(x) {
 			return x, i
 		}
@@ -87,8 +99,12 @@ func Find[T any](arr []T, fn func(x T) bool) (T, int) {
 // The sort function sorts a slice using the provided sort function
 //
 //	Sort(slice, fn func(a, b int) bool { return a >= b})
-func Sort[T any](arr []T, fn func(a, b T) bool) {
-	sort.Slice(arr, func(i, j int) bool {
-		return fn(arr[i], arr[j])
+func (e Enumerable[T]) Sort(fn func(a, b T) bool) Enumerable[T] {
+	newSlice := make([]T, len(e.data))
+	copy(newSlice, e.data)
+	sort.Slice(newSlice, func(i, j int) bool {
+		return fn(newSlice[i], newSlice[j])
 	})
+
+	return New(newSlice)
 }
